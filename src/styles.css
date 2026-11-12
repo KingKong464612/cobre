@@ -1,0 +1,449 @@
+@import "tailwindcss";
+@import "@fontsource/outfit/latin-400.css";
+@import "@fontsource/outfit/latin-500.css";
+@import "@fontsource/outfit/latin-600.css";
+@import "@fontsource/fraunces/latin-500.css";
+@import "@fontsource/fraunces/latin-600.css";
+
+@theme {
+  --color-ink: #141210;
+  --color-panel: #221e18;
+  --color-paper: #f4ecdf;
+  --color-muted: #9c8f7c;
+  --color-copper: #d4783a;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --radius-panel: 1.25rem;
+  --shadow-line: 0 0 0 1px rgba(244, 236, 223, 0.08);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+    background:
+      linear-gradient(var(--color-copper), var(--color-copper)) top / 100% 3px no-repeat,
+      var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+.chassis {
+  position: relative;
+  border-radius: var(--radius-panel);
+  background: var(--color-panel);
+  box-shadow: var(--shadow-line);
+  padding: 1.35rem 1rem 1.15rem;
+}
+
+.screw {
+  position: absolute;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      color-mix(in oklab, var(--color-paper) 75%, transparent) 0 0.5px,
+      transparent 1.3px
+    ),
+    radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--color-paper) 18%, var(--color-ink)), var(--color-ink));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-paper) 28%, transparent);
+}
+
+.screw-tl { top: 0.7rem; left: 0.7rem; }
+.screw-tr { top: 0.7rem; right: 0.7rem; }
+.screw-bl { bottom: 0.7rem; left: 0.7rem; }
+.screw-br { bottom: 0.7rem; right: 0.7rem; }
+
+.status-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.4rem;
+  border-radius: 999px;
+  background: var(--color-muted);
+  vertical-align: 0.05em;
+}
+
+.status-dot.is-on {
+  background: var(--color-copper);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-copper) 24%, transparent);
+}
+
+.power-btn,
+.wave-btn,
+.icon-btn,
+.text-btn,
+.knob {
+  border: 0;
+  font: inherit;
+}
+
+.power-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  padding: 0 1rem 0 0.85rem;
+  border-radius: 999px;
+  background: var(--color-copper);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.power-btn[data-on="true"] {
+  background: transparent;
+  color: var(--color-paper);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-paper) 28%, transparent);
+}
+
+.wave-btn,
+.icon-btn {
+  color: var(--color-paper);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-paper) 16%, transparent);
+}
+
+.wave-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding: 0 0.8rem;
+  border-radius: 0.85rem;
+  font-weight: 500;
+}
+
+.wave-btn.is-on {
+  background: var(--color-copper);
+  color: var(--color-ink);
+  box-shadow: none;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.85rem;
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.octave-readout {
+  min-width: 4.75rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.text-btn {
+  min-height: 2.75rem;
+  padding: 0 0.15rem;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 0.22rem;
+}
+
+.text-btn:hover {
+  color: var(--color-paper);
+}
+
+.power-btn:focus-visible,
+.wave-btn:focus-visible,
+.icon-btn:focus-visible,
+.text-btn:focus-visible,
+.knob:focus-visible,
+.white-key:focus-visible,
+.black-key:focus-visible {
+  outline: 2px solid var(--color-copper);
+  outline-offset: 3px;
+}
+
+.knob {
+  position: relative;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 38%, color-mix(in oklab, var(--color-paper) 12%, var(--color-panel)), var(--color-ink) 70%);
+  box-shadow:
+    var(--shadow-line),
+    inset 0 1px 0 color-mix(in oklab, var(--color-paper) 18%, transparent);
+  touch-action: none;
+}
+
+.knob-rotor {
+  position: absolute;
+  inset: 0;
+}
+
+.knob-tick {
+  position: absolute;
+  top: 0.45rem;
+  left: 50%;
+  width: 2px;
+  height: 0.72rem;
+  border-radius: 999px;
+  background: var(--color-copper);
+  transform: translateX(-50%);
+}
+
+.scope-bezel {
+  position: relative;
+  height: 7.5rem;
+  overflow: hidden;
+  border-radius: 0.85rem;
+  background: var(--color-ink);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-paper) 10%, transparent);
+}
+
+.scope-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--color-copper);
+}
+
+.scope-grid {
+  stroke: var(--color-paper);
+  stroke-width: 0.4;
+  opacity: 0.18;
+}
+
+.scope-svg polyline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.scope-wait {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 1rem;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.meter-track {
+  position: relative;
+  height: 0.6rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-paper) 10%, transparent);
+}
+
+.meter-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--color-copper);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.meter-peak {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: var(--color-paper);
+}
+
+.piano-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  border-radius: 1rem;
+  background: color-mix(in oklab, var(--color-panel) 78%, var(--color-ink));
+  box-shadow: var(--shadow-line);
+  padding: 0.35rem 0.45rem 0.55rem;
+}
+
+.piano-grab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.piano {
+  position: relative;
+  display: flex;
+  height: 11.5rem;
+  min-width: max(100%, 41.25rem);
+  user-select: none;
+}
+
+.white-key,
+.black-key {
+  border: 0;
+  font: inherit;
+  touch-action: none;
+}
+
+.white-key {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1 0 2.75rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.15rem;
+  padding: 0 0 0.45rem;
+  border-radius: 0 0 0.45rem 0.45rem;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  box-shadow: inset -1px 0 0 color-mix(in oklab, var(--color-ink) 14%, transparent);
+  transition: transform 90ms ease, background-color 90ms ease;
+}
+
+.white-key[data-active="true"] {
+  background: var(--color-copper);
+  color: var(--color-ink);
+  box-shadow:
+    inset 0 -12px 14px color-mix(in oklab, var(--color-ink) 22%, transparent),
+    0 0 22px color-mix(in oklab, var(--color-copper) 80%, transparent);
+  transform: translateY(3px);
+}
+
+.black-key {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 62%;
+  padding-bottom: 0.4rem;
+  border-radius: 0 0 0.35rem 0.35rem;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--color-paper) 16%, transparent),
+    0 8px 12px color-mix(in oklab, black 45%, transparent);
+  transition: transform 90ms ease, background-color 90ms ease, color 90ms ease;
+}
+
+.black-key[data-active="true"] {
+  background: var(--color-copper);
+  color: var(--color-ink);
+  box-shadow: 0 0 18px color-mix(in oklab, var(--color-copper) 85%, transparent);
+  transform: translateY(2px);
+}
+
+.key-hint,
+.key-note {
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.key-note {
+  font-weight: 500;
+  opacity: 0.62;
+}
+
+.black-key .key-hint {
+  font-size: 0.7rem;
+}
+
+@media (max-width: 959px) {
+  .stage {
+    height: 100svh;
+    max-height: 100svh;
+    min-height: 0;
+    overflow: hidden;
+    padding-bottom: 0.75rem;
+  }
+
+  .stage-controls {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .scope-bezel {
+    height: 5.75rem;
+  }
+
+  .piano {
+    height: 9.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .chassis {
+    padding: 1.5rem 1.35rem 1.3rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .piano {
+    height: 13.25rem;
+    min-width: 100%;
+  }
+
+  .white-key {
+    flex-basis: 0;
+  }
+
+  .piano-grab {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .white-key,
+  .black-key {
+    transition: none;
+  }
+
+  .white-key[data-active="true"],
+  .black-key[data-active="true"] {
+    transform: none;
+  }
+}
